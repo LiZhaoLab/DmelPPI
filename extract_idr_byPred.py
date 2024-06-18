@@ -1,0 +1,143 @@
+"""
+    Extract IDR by prediction that involve conditionally folding in monomers
+    03/14/2024, by jpeng
+"""
+
+import pandas as pd
+import numpy as np
+
+dssp_code = "EHBGTSI-"
+state3_code = "EHEHCCCC"
+replace_tbl = dict(zip(dssp_code,state3_code))
+
+def rangeStrToList(residue_ranges):
+    residues = []
+
+    if residue_ranges == "":
+        return residues
+
+    for residue_range in residue_ranges.split(";"):
+        #print(residue_ranges,residue_range)
+        i,j = residue_range.split("-")
+        i,j = int(i),int(j)
+        for m in range(i,j+1):
+            residues.append(m)
+
+    return residues
+
+def longIDR(ss_seqs,ds_scores,lddt_scores,coil_region=[],cutoff=20):
+    seqlen = len(ds_scores)
+    longidrs = []
+    plddts = []
+    ss = []
+    residues = [m for m in range(1,len(ds_scores)+1)]
+
+    #diso = [0] + [1 if s=="C" else 0 for s in ss_seqs] + [0]
+    #diso = [0] + [1 if d>0.6 else 0 for d in ds_scores] + [0]
+    #diso = [0] + [1 if l<0.5 or s=="C" or d>0.6 else 0 for l,s,d in zip(lddt_scores,ss_seqs,ds_scores)] + [0]
+    diso = [0] + [1 if l>0.7 and d>0.5 and i not in coil_region else 0 for l,d,i in zip(lddt_scores,ds_scores,residues)] + [0]
+    ## add 0 in the beginning and end to better assign flags ##
+    ## so that I only need to flag indexes with 
+    ## diso[idx-1]==0 & diso[idx]==1 or
+    ## diso[idx]==1 & diso[idx+1]==0
+    ## e.g.
+    ## 01234567890123456789012
+    ## 01111111110000111111110
+    ## flags = [1,9,14,21]
+
+    flags = []
+    for i in range(1,seqlen+1):
+        if diso[i-1]==0 and diso[i]==1:
+            flags.append(i)
+        if diso[i]==1 and diso[i+1]==0:
+            flags.append(i)
+
+    ## if length of ordered region is smaller than 3
+    ## consider to connect the two adjacent IDRs ##
+    nf = len(flags)//2
+
+    if nf>1:
+        flags2remove = []
+        for i in range(nf-1):
+            i1 = 2*i+1
+            i2 = 2*i+2
+            if flags[i2]-flags[i1]<=3:
+                flags2remove.append(flags[i1])
+                flags2remove.append(flags[i2])
+
+        for i in flags2remove:
+            flags.remove(i)
+
+    ## now check if there are long IDRs based on the new flags ##
+    ## As we are looking for CF regions, we remove long IDRs without secondary structures ##
+    nf = len(flags)//2
+    longidrs = []
+    idrstrs = []
+    plddts = []
+    ss = []
+    if nf:
+        for i in range(nf):
+            i2 = flags[2*i+1]
+            i1 = flags[2*i]
+            length_idr = i2-i1
+
+            ## long IDRs should be at least 30 aa
+            if length_idr>cutoff:
+                ssi = [ss_seqs[s] for s in range(i1-1,i2)]
+                #noss = [s=="C" for s in ssi]
+                #if sum(noss)/len(ssi)<0.3:
+                ss += ["".join([ss_seqs[s] for s in range(i1-1,i2)])]
+                idrstrs += ['%d-%d'%(i1,i2)]
+                plddt = [lddt_scores[s] for s in range(i1-1,i2)]
+                plddt = np.mean(plddt)
+                longidrs += [s for s in range(i1,i2+1)]
+                #plddts += [lddt_scores[s] for s in range(m,M+1)]
+                #ss += [ss_seqs[s] for s in range(m,M+1)]
+                plddts += ["%.3f"%plddt]
+
+    idrstrs = ';'.join(idrstrs)
+    ss = ";".join(ss)
+    plddts = ";".join(plddts)
+    return ss,longidrs,idrstrs,plddts
+        
+
+df = pd.read_csv("fbpp_out_pred.tsv",sep="\t")
+dfcoil = pd.read_csv("fbpp_longidrs_byCoil.csv")
+coil_regions = {fbpp: rangeStrToList(longidrs) for fbpp,longidrs in zip(dfcoil.fbpp,dfcoil.longidrs)}
+
+data = {"fbpp":[],"ss":[]}
+fbpp2disorder = {}
+cols = df.columns
+for fbpp,i,res,pl,d,rsa,ss,ds,bs in zip(*[df[col] for col in cols]):
+    ss = replace_tbl[ss]
+    if fbpp not in fbpp2disorder:
+        fbpp2disorder[fbpp] = [[ss],[ds],[pl]]
+    else:
+        fbpp2disorder[fbpp][0].append(ss)
+        fbpp2disorder[fbpp][1].append(ds)
+        fbpp2disorder[fbpp][2].append(pl)
+
+for fbpp in fbpp2disorder:
+    data["fbpp"].append(fbpp)
+    data["ss"].append("".join(fbpp2disorder[fbpp][0]))
+
+data = pd.DataFrame(data)
+data.to_csv("fbpp_ss.csv",index=False)
+
+cf_cutoff = 5
+f = open("fbpp_longidrs_byPred.csv","w")
+header = "fbpp,longidrs,ss,plddt"
+f.write(header+"\n")
+for fbpp in fbpp2disorder:
+    if fbpp in coil_regions:
+        coil_region = coil_regions[fbpp]
+    else:
+        coil_region = []
+    ss,longidrs,idrstrs,plddts = longIDR(*fbpp2disorder[fbpp],coil_region=coil_region,cutoff=cf_cutoff)
+    ss_all = fbpp2disorder[fbpp][0]
+    ss_all = "".join(ss_all)
+    if idrstrs:
+        line = f"{fbpp},{idrstrs},{ss},{plddts}"
+        print(line,coil_region)
+        f.write(line+"\n")
+f.close()
