@@ -199,17 +199,18 @@ def hypergeom_test(ss1,ss2):
     p = hypergeom(M=M,n=n,N=N).sf(k-1)
     return p
 
-def extract_dnds(fbpp,dnds_dir = "/ru-auth/local/home/jpeng/scratch/DmelPPI/alignments/"):
-    dnds = {fbpp:{}}
-    fdnds = os.path.join(dnds_dir,"raw_hit/%s.dnds.txt"%fbpp)
-    if os.path.isfile(fdnds):
-        lines = open(fdnds,"r")
-        for line in lines:
-            i,w = line[:-1].split()
-            w = float(w) if w!="-" else w
-            if w!="-":
-                dnds[fbpp][int(i)] = w
-    return dnds
+# USE CONSERVATION SCORE INSTEAD #
+#def extract_dnds(fbpp,dnds_dir = "/ru-auth/local/home/jpeng/scratch/DmelPPI/alignments/"):
+#    dnds = {fbpp:{}}
+#    fdnds = os.path.join(dnds_dir,"raw_hit/%s.dnds.txt"%fbpp)
+#    if os.path.isfile(fdnds):
+#        lines = open(fdnds,"r")
+#        for line in lines:
+#            i,w = line[:-1].split()
+#            w = float(w) if w!="-" else w
+#            if w!="-":
+#                dnds[fbpp][int(i)] = w
+#    return dnds
 
 def extract_conservation_score(fbpp,datadir="/ru-auth/local/home/jpeng/scratch/DmelPPI/binding_categories/af_dis2order/conservationIDR/newblastp_hits/"):
     conservation_score = {fbpp:{}}
@@ -223,11 +224,12 @@ def extract_conservation_score(fbpp,datadir="/ru-auth/local/home/jpeng/scratch/D
 def read_conservation(inp = "fbpp.txt"):
     proteins = np.loadtxt(inp,dtype=str)
     conservation = {}
-    dnds = {}
+    #dnds = {}
     for fbpp in proteins:
         conservation = {**conservation,**extract_conservation_score(fbpp)}
-        dnds = {**dnds,**extract_dnds(fbpp)}
-    return conservation,dnds
+        #dnds = {**dnds,**extract_dnds(fbpp)}
+    #return conservation,dnds
+    return conservation
 
 def read_coil(fcoil = "fbpp_longidrs_byCoil.csv"):
     ## hash long IDRs (COIL) into dictions ##
@@ -412,12 +414,12 @@ def extract_SS(fmonomer = "fbpp_ss.csv", fcomplex = "pairs_ss.csv"):
 
 def check_idr_binding(p1,p2,interface1,interface2,pdockq,pair_ss,pro_ss,idx_with_coil,idx_with_CF,idx_with_idrs):
     ## read in coordinates ##
-    fpdb = f"../AF2_PPI/7227.{p1}_7227.{p2}.pdb"
-    coors = read_coor(fpdb)
+    fpdb = f"./PDB/7227.{p1}_7227.{p2}.pdb"
+    #coors = read_coor(fpdb)
     chainkeys = [ch for ch in coors]
-    coors_p1 = coors[chainkeys[0]]
-    coors_p2 = coors[chainkeys[1]]
-    coors = {p1:coors_p1,p2:coors_p2}
+    #coors_p1 = coors[chainkeys[0]]
+    #coors_p2 = coors[chainkeys[1]]
+    #coors = {p1:coors_p1,p2:coors_p2}
     #print(interface1)
     #print(interface2)
 
@@ -718,7 +720,7 @@ if __name__ == "__main__":
     ## read conservation score ##
     #conservation_score,dnds = read_conservation()
     conservation_score = {}
-    dnds = {}
+    #dnds = {}
     t1 = time.time()
     t = t1-t0
     t0 = t1
