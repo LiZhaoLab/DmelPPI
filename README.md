@@ -42,10 +42,8 @@
 
     options:
         -h, --help            show this help message and exit
-        -m MODEL, --model MODEL
-                            Name prefix of the model to plot
-        -s {Y,N}, --show {Y,N}
-                        Whether to show and save figure
+        -m MODEL, --model MODEL Name prefix of the model to plot
+        -s {Y,N}, --show {Y,N}  Whether to show and save figure
         -d DCUT, --dcut DCUT  distance cutoff to determine interactions
         -p PCUT, --pcut PCUT  PAE cutoff to determine possible interface
     ```
