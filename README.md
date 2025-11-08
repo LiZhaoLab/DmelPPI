@@ -31,7 +31,24 @@
     - output: `fbpp_longidrs_byPred_noCF.csv`  
         - The output contains non coil and non conditionally folded regions (ISD>0.5, pLDDT<0.7, defined secondary structures) in monomer proteins  
 
-2. Extract interfaces
+2. Extract interfaces  
+    `plot_pae.py`
+    - A standalone script that can be used to calculate pDockQ, extract interface, plot PAE matrix
+
+    ```
+    usage: plot_pae.py [-h] -m MODEL [-s {Y,N}] [-d DCUT] [-p PCUT]
+
+    Plot AlphaFold PAE
+
+    options:
+        -h, --help            show this help message and exit
+        -m MODEL, --model MODEL
+                            Name prefix of the model to plot
+        -s {Y,N}, --show {Y,N}
+                        Whether to show and save figure
+        -d DCUT, --dcut DCUT  distance cutoff to determine interactions
+        -p PCUT, --pcut PCUT  PAE cutoff to determine possible interface
+    ```
 
 
 3. Statistics of interfaces
