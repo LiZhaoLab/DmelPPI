@@ -46,7 +46,13 @@
         -s {Y,N}, --show {Y,N}  Whether to show and save figure
         -d DCUT, --dcut DCUT  distance cutoff to determine interactions
         -p PCUT, --pcut PCUT  PAE cutoff to determine possible interface
-    ```
+    ```  
+
+    `extract_pae.py`  
+    - calls `plot_pae.py` in parallel  
+        - input: A list of model names  
+        - output: `pae_summary.csv`  
+            - The output contains following columns: `pair,iptm,pae,pdockq,interfaceA,interfaceB,plddtA,plddtB,interface_pairs,ppi`  
 
 
 3. Statistics of interfaces
