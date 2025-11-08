@@ -55,5 +55,13 @@
             - The output contains following columns: `pair,iptm,pae,pdockq,interfaceA,interfaceB,plddtA,plddtB,interface_pairs,ppi`  
 
 
-3. Statistics of interfaces
+3. Statistics of interfaces  
+    `pairs_orderWithorder.py`
+    - inputs  
+        - blastp output  
+        - Different types of IDR regions: `fbpp_longidrs_byCoil.csv, fbpp_longidrs_byPred.csv, fbpp_longidrs_byPred_noCF.csv`  
+        - Secondary structures in predicted hetero-dimer models  
+        - Secondary structures in predicted monomer models  
+    - output: `pairs_highconf_with_idrs.csv`
+        - The output contains following columns, `pair,Protein1,Protein2,Symbol1,Symbol2,iptm,pae,pdockq,interfaceA,interfaceB,plddtA,plddtB,interface_pairs,ppi`
 
