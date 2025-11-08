@@ -8,10 +8,13 @@
     `pos`  - residue index  
     `lddt` - Monomer pLDDT by AlphaFold2 
     `ss`   - Secondary structure predicted by DSSP 
-    `disorder-25` - Intrinsic structural disorder (ISD) predicted by AlphaFold-Disorder
+    `disorder-25` - Intrinsic structural disorder (ISD) predicted by AlphaFold-Disorder  
+
+2. Predicted models (pdb format). Available at figshare  
+
+3. Predicted metrics (pkl format). Available at figshare
 
 ## Scripts  
-
 1. extract different types of IDRs  
     `extract_idr_byCoil.py`  
     - input: `fbpp_out_pred.tsv`  
