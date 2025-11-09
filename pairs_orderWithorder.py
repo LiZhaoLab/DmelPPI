@@ -380,7 +380,7 @@ def write_longidrs(pro_with_coil,idx_with_coil,pro_with_CF,idx_with_CF,pro_with_
     
     return pro_with_idrs,idx_with_idrs
 
-def extract_SS(fmonomer = "fbpp_ss.csv", fcomplex = "pairs_ss.csv"):
+def extract_SS(fmonomer = "fbpp_ss.csv", fcomplex = "complex_ss.csv"):
     ## hash monomer secondary structure information into dictions ##
     ##
     dssp_code   = "HGIEBTSCP-"
@@ -711,7 +711,7 @@ if __name__ == "__main__":
     pro_with_idrs,idx_with_idrs = write_longidrs(pro_with_coil,idx_with_coil,pro_with_CF,idx_with_CF,pro_with_diso,idx_with_diso)
 
     ## read in secondary structures ##
-    pro_ss,pair_ss = extract_SS(fmonomer = "fbpp_ss.csv", fcomplex = "pairs_ss.csv")
+    pro_ss,pair_ss = extract_SS(fmonomer = "fbpp_ss.csv", fcomplex = "complex_ss.csv")
     t1 = time.time()
     t = t1-t0
     t0 = t1

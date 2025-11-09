@@ -9,9 +9,13 @@
         `ss`   - Secondary structure predicted by DSSP  
         `disorder-25` - Intrinsic structural disorder (ISD) predicted by AlphaFold-Disorder  
 
-2. Predicted models (pdb format). Available at figshare  
+2. `fbpp_ss.csv` - The secondary structure of monomers (from AF database)  
 
-3. Predicted metrics (pkl format). Available at figshare
+3. `complex_ss.csv` - The secondary structure of predicted complex models  
+
+4. Predicted models (pdb format). Available at figshare  
+
+5. Predicted metrics (pkl format). Available at figshare
 
 ## Scripts  
 ### 1. extract different types of IDRs from monomers  
