@@ -14,7 +14,7 @@
 3. Predicted metrics (pkl format). Available at figshare
 
 ## Scripts  
-### extract different types of IDRs  
+### 1. extract different types of IDRs from monomers  
 `extract_idr_byCoil.py`  
 - input: `fbpp_out_pred.tsv`  
 - output: `fbpp_longidrs_byCoil.csv`  
@@ -30,7 +30,7 @@
 - output: `fbpp_longidrs_byPred_noCF.csv`  
     - The output contains non coil and non conditionally folded regions (ISD>0.5, pLDDT<0.7, defined secondary structures) in monomer proteins  
 
-### Extract interfaces  
+### 2. Extract interfaces from predicted model   
 `plot_pae.py`
 - A standalone script that can be used to calculate pDockQ, extract interface, plot PAE matrix
 
@@ -54,7 +54,7 @@ options:
         - The output contains following columns: `pair,iptm,pae,pdockq,interfaceA,interfaceB,plddtA,plddtB,interface_pairs,ppi`  
 
 
-### Statistics of interfaces  
+### 3. Statistics of interfaces  
 `pairs_orderWithorder.py`
 - inputs  
     - blastp output  
