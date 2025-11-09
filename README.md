@@ -31,8 +31,7 @@
     - The output contains non coil and non conditionally folded regions (ISD>0.5, pLDDT<0.7, defined secondary structures) in monomer proteins  
 
 ### 2. Extract interfaces from predicted model   
-`plot_pae.py`
-- A standalone script that can be used to calculate pDockQ, extract interface, plot PAE matrix
+`plot_pae.py` - A standalone script that can be used to calculate pDockQ, extract interface, plot PAE matrix
 
 ```
 usage: plot_pae.py [-h] -m MODEL [-s {Y,N}] [-d DCUT] [-p PCUT]
@@ -47,14 +46,12 @@ options:
     -p PCUT, --pcut PCUT  PAE cutoff to determine possible interface
 ```  
 
-`extract_pae.py`  
-- calls `plot_pae.py` in parallel  
+`extract_pae.py`  - calls `plot_pae.py` in parallel  
     - input: A list of model names  
     - output: `pae_summary.csv`  
         - The output contains following columns: `pair,iptm,pae,pdockq,interfaceA,interfaceB,plddtA,plddtB,interface_pairs,ppi`  
 
-`best_models.py`  
-- extract the best predicted models from five random models by AF2 multimer
+`best_models.py` - extract the best predicted models from five random models by AF2 multimer
 
 ### 3. Statistics of interfaces  
 `pairs_orderWithorder.py`
