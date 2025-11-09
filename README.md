@@ -18,7 +18,7 @@
 `extract_idr_byCoil.py`  
 - input: `fbpp_out_pred.tsv`  
 - output: `fbpp_longidrs_byCoil.csv`  
-    - The output contains coiled IDR regions (ISD>0.5, pLDDT<0.7, no defined secondary structures) in monomer proteins 
+    - The output contains coiled IDR regions (ISD>0.5, pLDDT<0.7, no defined secondary structures) in monomer proteins  
 
 `extract_idr_byPred.py`  
 - input: `fbpp_out_pred.tsv`  
@@ -29,6 +29,8 @@
 - input: `fbpp_out_pred.tsv`  
 - output: `fbpp_longidrs_byPred_noCF.csv`  
     - The output contains non coil and non conditionally folded regions (ISD>0.5, pLDDT<0.7, defined secondary structures) in monomer proteins  
+
+The scripts also generate `fbpp_ss.csv`, which is the secondary structure of monomers.  
 
 ### 2. Extract interfaces from predicted model   
 `plot_pae.py` - A standalone script that can be used to calculate pDockQ, extract interface, plot PAE matrix
