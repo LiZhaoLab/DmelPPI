@@ -14,7 +14,7 @@
 3. Predicted metrics (pkl format). Available at figshare
 
 ## Scripts  
-1. extract different types of IDRs  
+#### 1. extract different types of IDRs  
     `extract_idr_byCoil.py`  
     - input: `fbpp_out_pred.tsv`  
     - output: `fbpp_longidrs_byCoil.csv`  
