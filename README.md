@@ -60,6 +60,7 @@ options:
 - `best_models.py` - extract the best predicted models from five random models by AF2 multimer
 
 ### 3. Statistics of interfaces  
+![Scheme of interface]((interface_illustration.png))
 - `pairs_orderWithorder.py`
     - inputs  
         - blastp output  
@@ -80,7 +81,7 @@ options:
             - `pvalue_coil_if1,pvalue_coil_if2` - The p-value whether secondary structure contents increase significantly from monomer state to complex state. This is to check whether there is coil-to-order transition binding  
             - `idr_region1,idr_region2,order_region1,order_region2` - The IDR regions and ordered regions in monomer state  
             - `idr_type1,idr_type2` - Short IDR (5-29 residues) or Long IDR (>= 30 residues)  
-            - `interaction_type` - Type of IDR binding  
+            - `interaction_type` - Type of IDR binding   
 
 ## Reference
 Peng, Junhui and Li Zhao. “A predicted structural interactome reveals binding interference from intrinsically disordered regions.” bioRxiv (2025): doi.org/10.1101/2025.08.15.670535.  
