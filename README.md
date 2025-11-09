@@ -62,7 +62,7 @@ options:
 ### 3. Statistics of interfaces  
 <p align="center">
 <img src="interface_illustration.png" alt="Interface illustration" width="66%"> </p>
-<div align="center" style="max-width:66%; margin:auto;">
+<div align="center" style="max-width:33%; margin:auto;">
   <sub><b>Figure 1.</b> Scheme of interface analysis. We check interface pairs by scanning clustered interfaces. 
   In this example, there are three interfaces (1, 2, and 3). For each interface, we examine whether an IDR 
   is involved, and if so, whether it represents coil binding, coil-to-order transition binding, or CF binding.</sub>
