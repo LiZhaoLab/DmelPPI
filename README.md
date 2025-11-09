@@ -60,12 +60,10 @@ options:
 - `best_models.py` - extract the best predicted models from five random models by AF2 multimer
 
 ### 3. Statistics of interfaces  
-![Scheme of interface](interface_illustration.png)
 
 <p align="center">
-  <b>Figure 1.</b> Scheme of interface analysis. We check interface pairs by scanning clustered interfaces. 
-  In this example, there are three interfaces (1, 2, and 3). For each interface, we examine whether an IDR 
-  is involved, and if so, whether it represents coil binding, coil-to-order transition binding, or CF binding.
+![Scheme of interface](interface_illustration.png) <br>
+<b>Figure 1.</b> Scheme of interface analysis. We check interface pairs by scanning clustered interfaces. In this example, there are three interfaces (1, 2, and 3). For each interface, we examine whether an IDR is involved, and if so, whether it represents coil binding, coil-to-order transition binding, or CF binding.
 </p>
 
 - `pairs_orderWithorder.py`
