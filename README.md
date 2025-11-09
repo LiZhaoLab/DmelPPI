@@ -1,4 +1,4 @@
-# DmelPPI
+# DmelPPI: A predicted structural interactome reveals binding interference from intrinsically disordered regions  
 
 ## Required inputs  
 1. `fbpp_out_pred.tsv` - the output of AlphaFold-Disorder  
